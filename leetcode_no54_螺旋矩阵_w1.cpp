@@ -1,4 +1,4 @@
-﻿/*------------------------------------------------------------------|
+/*------------------------------------------------------------------|
 给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。
 
 示例 1:
@@ -25,10 +25,10 @@
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。|
 -------------------------------------------------------------------*/
 
-/*	贪心算法
+/*	旋转
 *
-*	执行用时：8 ms, 在所有 C++ 提交中击败了67.73%的用户
-*	内存消耗：12.9 MB, 在所有 C++ 提交中击败了17.32%的用户
+*	执行用时：0 ms, 在所有 C++ 提交中击败了100.00%的用户
+*	内存消耗：6.8 MB, 在所有 C++ 提交中击败了5.00%的用户				内存排名有问题
 */
 
 #include <iostream>
@@ -55,48 +55,39 @@ vector<int> spiralOrder(vector<vector<int>>& matrix)
 	int down = matrix.size() - 1;
 	int left = 0;
 	int right = matrix[0].size() - 1;
-
-	if (down > 1 % %right > 1)
-	{
-		int k = matrix[down / 2][right / 2];
-	}
 	
-
 	vector<int> res;
 
-	while (up <= down || left <= right)
-	{
-		
+	while (up <= down && left <= right)
+	{		
 		for (int i = left; i < right; i++)
 		{
 			res.push_back(matrix[up][i]);
 		}
 
-		for (int j = up; j < down; j++)
+		for (int j = up; j <= down; j++)
 		{
 			res.push_back(matrix[j][right]);
 		}
 
-		for (int i = right; i > left; i--)
-		{
-			res.push_back(matrix[down][i]);
-		}
-
-		for (int j = down; j > up; j--)
-		{
-			res.push_back(matrix[j][left]);
-		}
-
 		up++;
-		left++;
-
-		down--;
 		right--;
-	}
 
-	if (matrix.size() % 2 && matrix[0].size() % 2)
-	{
-		res.push_back(k);
+		if (up <= down && left <= right)
+		{
+			for (int i = right; i > left; i--)
+			{
+				res.push_back(matrix[down][i]);
+			}
+
+			for (int j = down; j >= up; j--)
+			{
+				res.push_back(matrix[j][left]);
+			}
+
+			down--;
+			left++;
+		}
 	}
 
 	return res;
